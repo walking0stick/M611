@@ -47,7 +47,7 @@ body.is-admin .admin-only-block{display:block!important}
 .section.active{display:block}
 .stats{display:flex;gap:8px;padding:14px 20px;overflow-x:auto;scrollbar-width:none}
 .stat-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:11px 16px;flex:1;min-width:100px;text-align:center}
-.stat-n{font-family:'IBM Plex Mono',monospace;font-size:1.25rem;font-weight:600;line-height:1}
+.stat-n ... {font-family:'IBM Plex Mono',monospace;font-size:1.25rem;font-weight:600;line-height:1}
 .stat-card p{font-size:0.7rem;color:var(--muted);margin-top:4px}
 .c-green{color:var(--green)}.c-red{color:var(--red)}.c-yellow{color:var(--yellow)}.c-blue{color:var(--blue)}.c-accent{color:var(--accent)}
 .search-area{display:flex;gap:8px;padding:10px 20px 12px;flex-wrap:wrap;align-items:center}
@@ -112,7 +112,7 @@ tbody td{padding:10px 12px;font-size:0.86rem;vertical-align:middle}
 .spinner{width:32px;height:32px;border:3px solid var(--surface2);border-top-color:var(--accent);border-radius:50%;animation:spin 0.8s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 
-.p1-card { max-w:420px; margin:24px auto; padding:0 16px; }
+.p1-card { max-width:420px; margin:24px auto; padding:0 16px; }
 .btn-primary-custom { background:var(--accent); color:white; border:none; width:100%; padding:12px; border-radius:10px; font-family:'Sarabun',sans-serif; font-size:0.92rem; font-weight:600; cursor:pointer; text-align:center; box-shadow:0 4px 12px rgba(108,99,255,0.2); transition:all 0.2s; }
 .btn-primary-custom:hover { opacity:0.9; }
 .btn-secondary-custom { background:var(--surface); border:1px solid var(--border); color:var(--text); width:100%; padding:12px; border-radius:10px; font-family:'Sarabun',sans-serif; font-size:0.9rem; font-weight:500; cursor:pointer; text-align:center; transition:all 0.2s; margin-top:12px; }
@@ -213,7 +213,7 @@ body.is-admin .bulk-panel { display:flex; }
   </div>
   <div class="table-wrap">
     <table>
-      <thead><tr><th style="width:40px" class="admin-only">เลือก</th><th>#</th><th>รหัส</th><th>ชื่อ-นามสกุล</th><th>สถานะ</th><th>วันที่</th><th>ยอด</th><th>จัดการ</th></tr></thead>
+      <thead><tr><th style="width:40px" class="admin-only">เลือก</th><th>รหัส</th><th>ชื่อ-นามสกุล</th><th>สถานะ</th><th>วันที่</th><th>ยอด</th><th>จัดการ</th></tr></thead>
       <tbody id="tBody"></tbody>
     </table>
   </div>
@@ -324,27 +324,42 @@ const FIREBASE_CONFIG = {
       databaseURL: 'https://m611-6a7df-default-rtdb.asia-southeast1.firebasedatabase.app/'
 };
 
-// รายชื่อ ม.6/11 รันรหัสโค้ดจำลองให้ทำงานในระบบได้
+// รายชื่อ ม.6/11 อัปเดตชุดข้อมูลใหม่ (ตัดเลขที่และจับกลุ่มตามที่คุณสั่งเป๊ะๆ)
 const MEMBERS = [
-  {no:1,code:'61101',name:'นาย ธีรภัทร เชื่อมภิญโญธนชาติ'},
-  {no:2,code:'61102',name:'นาย ณฐกร สมชีวา'},
-  {no:3,code:'61103',name:'นาย พีรพล เกรัมย์'},
-  {no:4,code:'61104',name:'นาย ณธีนนท์ แสนศรีจิรโชติ'},
-  {no:5,code:'61105',name:'นาย ปณชัย ศิริปี'},
-  {no:6,code:'61106',name:'นาย รวิภาส เชิตสูงเนิน'},
-  {no:7,code:'61107',name:'นาย กิตติพจน์ ตันติกุลวัฒนกิจ'},
-  {no:8,code:'61108',name:'นางสาว นิชานันต์ ขจีฟ้า'},
-  {no:9,code:'61109',name:'นางสาว หัสยา บุระคำ'},
-  {no:10,code:'61110',name:'นางสาว ภัณฑิรา พิเชียรนันทกุล'},
-  {no:11,code:'61111',name:'นางสาว พิชชาภา ชุมพลวงศ์'},
-  {no:12,code:'61112',name:'นางสาว สุพัตรา ศรีเมือง'},
-  {no:13,code:'61113',name:'นางสาว จุฑารัตน์ กินรัมย์'},
-  {no:14,code:'61114',name:'นางสาว ธิดารัตน์ ปัตตายะโส'},
-  {no:15,code:'61115',name:'เด็กหญิง เจนจุติณัฎฐ์ จักรภพนรากุล'},
-  {no:16,code:'61116',name:'นางสาว ณิชาภา สะเทิงรัมย์'},
-  {no:17,code:'61117',name:'นางสาว ธัญภา ครบสุวรรณ'},
-  {no:18,code:'61118',name:'นางสาว วีรยา เจวรัมย์'},
-  {no:19,code:'61119',name:'นาย ศักดา ปรุดรัมย์'}
+  {code:'38598',name:'นาย ธีรภัทร เชื่อมภิญโญธนชาติ'},
+  {code:'38663',name:'นาย ณฐกร สมชีวา'},
+  {code:'38711',name:'นาย พีรพล เกรัมย์'},
+  {code:'38796',name:'นาย ณธีนนท์ แสนศรีจิรโชติ'},
+  {code:'38852',name:'นาย ปณชัย ศิริปี'},
+  {code:'38902',name:'นาย รวิภาส เชิตสูงเนิน'},
+  {code:'38968',name:'นาย กิตติพจน์ ตันติกุลวัฒนกิจ'},
+  {code:'38809',name:'นางสาว นิชานันต์ ขจีฟ้า'},
+  {code:'38828',name:'นางสาว หัสยา บุระคำ'},
+  {code:'38864',name:'นางสาว ภัณฑิรา พิเชียรนันทกุล'},
+  {code:'38956',name:'นางสาว พิชชาภา ชุมพลวงศ์'},
+  {code:'38962',name:'นางสาว สุพัตรา ศรีเมือง'},
+  {code:'41290',name:'นางสาว จุฑารัตน์ กินรัมย์'},
+  {code:'39032',name:'นางสาว ธิดารัตน์ ปัตตายะโส'},
+  {code:'39062',name:'เด็กหญิง เจนจุติณัฎฐ์ จักรภพนรากุล'},
+  {code:'39067',name:'นางสาว ณิชาภา สะเทิงรัมย์'},
+  {code:'39070',name:'นางสาว ธัญภา ครบสุวรรณ'},
+  {code:'39085',name:'นางสาว วีรยา เจวรัมย์'},
+  {code:'38728',name:'นาย ศักดา ปรุดรัมย์'},
+  {code:'38977',name:'นาย ธีรวินท์ จันทร์เพ็ญ'},
+  {code:'38990',name:'นาย บภัทร อัครโชติตุธี'},
+  {code:'39014',name:'นาย ก้องกฤษณ์ เกตุพันธ์'},
+  {code:'39022',name:'นาย ธิรบัทร แก้วแกมตา'},
+  {code:'39040',name:'นาย ศิฐิหัฐ เรืองโพคาล'},
+  {code:'39041',name:'นาย ศุกลวัตน์ คำเมือก'},
+  {code:'42121',name:'นางสาว วรัญทยา คำศรีสุข'},
+  {code:'39086',name:'นางสาว ศิรกัสสร สุริย'},
+  {code:'41318',name:'นางสาว สิริริมา กาตนอก'},
+  {code:'41319',name:'นางสาว สุธิมา เมล์ทาง'},
+  {code:'41320',name:'นางสาว ขวัญมุก หอมมาลา'},
+  {code:'41322',name:'นางสาว อัจฉราพร ทองน้อย'},
+  {code:'41323',name:'นางสาว ขัชภาภรณ์ หงษ์หา'},
+  {code:'41324',name:'นางสาว นันธิดา นิยมเหมาะ'},
+  {code:'42139',name:'นางสาว ปนัดดา เกษร'}
 ];
 
 // ── STATE ──
@@ -377,20 +392,17 @@ window.addEventListener('DOMContentLoaded', () => {
         }
       }
       document.getElementById('loadingScreen').style.display = 'none';
-      navigateToPage(1);
       setSyncStatus('synced','เชื่อมต่อแล้ว');
       renderAll();
     }, (error) => {
       console.error(error);
       setSyncStatus('error','เชื่อมต่อไม่ได้');
       document.getElementById('loadingScreen').style.display = 'none';
-      navigateToPage(1);
       renderAll();
     });
   } catch(e) {
     console.error(e);
     document.getElementById('loadingScreen').style.display = 'none';
-    navigateToPage(1);
     renderAll();
   }
 });
@@ -525,7 +537,7 @@ function renderAll() {
 function renderP1StaticSelects() {
   const p1Sel = document.getElementById('p1StudentSel');
   p1Sel.innerHTML = '<option value="">-- กรุณาเลือกชื่อของคุณ --</option>' + 
-    MEMBERS.map(m=>`<option value="${m.code}">${m.no}. ${m.name}</option>`).join('');
+    MEMBERS.map(m=>`<option value="${m.code}">[${m.code}] ${m.name}</option>`).join('');
 }
 
 function renderRoundSel() {
@@ -612,7 +624,7 @@ async function saveBulkUnpaid() {
   checkedBoxes.forEach(cb => {
      const code = cb.value;
      if(rd.payments[code]) {
-        delete rd.payments[code]; // ลบข้อมูลการจ่ายเงินออกเพื่อให้กลายเป็นยังไม่จ่าย
+        delete rd.payments[code];
      }
   });
   
@@ -644,7 +656,7 @@ function renderTable() {
     
     const bulkCheckTd = isAdmin ? `<td class="admin-only" style="text-align:center"><input type="checkbox" class="bulk-item-check" value="${r.code}" /></td>` : `<td class="admin-only"></td>`;
     
-    return`<tr>${bulkCheckTd}<td class="mono" style="font-size:0.76rem;color:var(--muted)">${r.no}</td><td class="mono" style="font-size:0.78rem;color:var(--muted)">${r.code}</td><td>${r.name}</td><td>${badge}</td><td style="font-size:0.8rem;color:var(--muted)">${dateStr}</td><td style="font-size:0.82rem">${amtStr}</td><td><div class="btn-row">${editBtn}${slipBtn}</div></td></tr>`;
+    return`<tr>${bulkCheckTd}<td class="mono" style="font-size:0.78rem;color:var(--muted)">${r.code}</td><td>${r.name}</td><td>${badge}</td><td style="font-size:0.8rem;color:var(--muted)">${dateStr}</td><td style="font-size:0.82rem">${amtStr}</td><td><div class="btn-row">${editBtn}${slipBtn}</div></td></tr>`;
   }).join('');
 }
 
@@ -652,7 +664,7 @@ function openPayModal(code) {
   if(!isAdmin)return;
   curCode=code;slipData=null;
   const m=MEMBERS.find(x=>x.code===code);
-  document.getElementById('payModalSub').textContent=`${m.no}. ${m.name} (${code})`;
+  document.getElementById('payModalSub').textContent=`${m.name} (${code})`;
   document.getElementById('payDt').value=today();
   document.getElementById('paySt').value='paid';
   document.getElementById('amtDue').textContent='50 บาท';
@@ -793,7 +805,7 @@ function viewSlip(code) {
   if(!p?.slip)return;
   document.getElementById('slipName').textContent=m.name;
   document.getElementById('slipImg').src=p.slip;
-  document.getElementById('slipDate').textContent=`วันที่จ่าย: ${p.date||'—'}`;
+  document.getElementById('slipDate').textContent=\`วันที่จ่าย: \${p.date||'—'}\`;
   document.getElementById('slipModal').classList.add('open');
 }
 
@@ -822,23 +834,23 @@ async function deleteExpense(id) {
 function renderExpenses() {
   const tbody=document.getElementById('expBody');
   const exps=state.expenses||[];
-  if(!exps.length){tbody.innerHTML=`<tr><td colspan="4" style="text-align:center;color:var(--muted);padding:20px">ยังไม่มีรายจ่าย</td></tr>`;return;}
+  if(!exps.length){tbody.innerHTML=\`<tr><td colspan="4" style="text-align:center;color:var(--muted);padding:20px">ยังไม่มีรายจ่าย</td></tr>\`;return;}
   const sorted=[...exps].sort((a,b)=>new Date(b.date)-new Date(a.date));
   tbody.innerHTML=sorted.map(e=>{
-    const del=isAdmin?`<td><button class="abtn" style="color:var(--red)" onclick="deleteExpense('${e.id}')">🗑</button></td>`:'';
-    return`<tr><td class="mono" style="font-size:0.8rem;color:var(--muted)">${e.date}</td><td>${e.title}</td><td style="color:var(--red);font-weight:600">- ฿${e.amount}</td>${del}</tr>`;
+    const del=isAdmin?\`<td><button class="abtn" style="color:var(--red)" onclick="deleteExpense('\${e.id}')">🗑</button></td>\`:'';
+    return\`<tr><td class="mono" style="font-size:0.8rem;color:var(--muted)">\${e.date}</td><td>\${e.title}</td><td style="color:var(--red);font-weight:600">- ฿\${e.amount}</td>\${del}</tr>\`;
   }).join('');
 }
 
 function exportCSV() {
   const rd=curRound();
   if(!rd) return;
-  const csvRows=[['#','รหัส','ชื่อ','สถานะ','วันที่','ยอด','มีสลิป']];
+  const csvRows=[['รหัส','ชื่อ','สถานะ','วันที่','ยอด','มีสลิป']];
   MEMBERS.forEach(m=>{
     const p=rd.payments ? rd.payments[m.code] : null;
-    csvRows.push([m.no,m.code,m.name,p ? (p.status==='paid'?'จ่ายแล้ว':'ยังไม่จ่าย') :'ยังไม่จ่าย',p?.date||'',p?(p.status==='paid'?50:0):0,p?.slip?'มี':'ไม่มี']);
+    csvRows.push([m.code,m.name,p ? (p.status==='paid'?'จ่ายแล้ว':'ยังไม่จ่าย') :'ยังไม่จ่าย',p?.date||'',p?(p.status==='paid'?50:0):0,p?.slip?'มี':'ไม่มี']);
   });
-  dl(new Blob(['\uFEFF'+csvRows.map(r=>r.map(c=>`"${c}"`).join(',')).join('\n')],{type:'text/csv'}),`เงินห้อง_${rd.name}.csv`);
+  dl(new Blob(['\uFEFF'+csvRows.map(r=>r.map(c=>\`"\${c}"\`).join(',')).join('\n')],{type:'text/csv'}),\`เงินห้อง_\${rd.name}.csv\`);
 }
 
 function exportTxt() {
@@ -853,11 +865,11 @@ function exportTxt() {
   let totalIncome=0;state.rounds.forEach(r=>Object.values(r.payments||{}).forEach(p=>{if(p.status==='paid')totalIncome+=50;}));
   const totalExp=(state.expenses||[]).reduce((s,e)=>s+Number(e.amount||0),0);
   const net=Number(state.oldMoney||0)+totalIncome-totalExp;
-  let txt=`📊 สรุปเงินห้อง ม.6/11 — ${rd.name}\n${'─'.repeat(40)}\n`;
-  txt+=`✅ จ่ายแล้ว (${paid.length} คน):\n`+(paid.length ? paid.map(m=>`  • ${m.name}`).join('\n') : '  - ไม่มี -')+'\n\n';
-  txt+=`❌ ยังไม่จ่าย (${unpaid.length} คน):\n`+(unpaid.length ? unpaid.map(m=>`  • ${m.name}`).join('\n') : '  - ไม่มี -')+'\n\n';
-  txt+=`${'─'.repeat(40)}\n💰 รายรับรวมทุกรอบ: ฿${totalIncome}\n💸 รายจ่ายรวม: ฿${totalExp}\n✨ คงเหลือสุทธิ: ฿${net}\n`;
-  dl(new Blob([txt],{type:'text/plain'}),`สรุปเงินห้อง_${rd.name}.txt`);
+  let txt=\`📊 สรุปเงินห้อง ม.6/11 — \${rd.name}\n\${'─'.repeat(40)}\n\`;
+  txt+=\`✅ จ่ายแล้ว (\${paid.length} คน):\n\`+(paid.length ? paid.map(m=>\`  • \${m.name}\`).join('\n') : '  - ไม่มี -')+'\n\n';
+  txt+=\`❌ ยังไม่จ่าย (\${unpaid.length} คน):\n\`+(unpaid.length ? unpaid.map(m=>\`  • \${m.name}\`).join('\n') : '  - ไม่มี -')+'\n\n';
+  txt+=\`\${'─'.repeat(40)}\n💰 รายรับรวมทุกรอบ: ฿\${totalIncome}\n💸 รายจ่ายรวม: ฿\${totalExp}\n✨ คงเหลือสุทธิ: ฿\${net}\n\`;
+  dl(new Blob([txt],{type:'text/plain'}),\`สรุปเงินห้อง_\${rd.name}.txt\`);
 }
 function dl(blob,name){const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=name;a.click();URL.revokeObjectURL(url);}
 function today(){return new Date().toISOString().split('T')[0];}
