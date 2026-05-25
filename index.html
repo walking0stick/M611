@@ -90,7 +90,7 @@ tbody td{padding:10px 12px;font-size:0.86rem;vertical-align:middle}
 .amt-box .val{font-family:'IBM Plex Mono',monospace;font-size:1.05rem;font-weight:600;color:var(--green)}
 .upload-zone{border:2px dashed var(--border);border-radius:10px;padding:20px;text-align:center;cursor:pointer;transition:all 0.2s;position:relative}
 .upload-zone:hover{border-color:var(--accent);background:rgba(108,99,255,0.05)}
-.upload-zone input[type="file"] {position:absolute;inset:0;opacity:0;cursor:pointer}
+.upload-zone input[type="file"]{position:absolute;inset:0;opacity:0;cursor:pointer}
 .upload-zone .icon{font-size:1.8rem;margin-bottom:6px}
 .upload-zone p{font-size:0.82rem;color:var(--muted)}
 .slip-prev{margin-top:10px;border-radius:8px;overflow:hidden;display:none}
@@ -112,7 +112,7 @@ tbody td{padding:10px 12px;font-size:0.86rem;vertical-align:middle}
 .spinner{width:32px;height:32px;border:3px solid var(--surface2);border-top-color:var(--accent);border-radius:50%;animation:spin 0.8s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 
-.p1-card { max-width:420px; margin:24px auto; padding:0 16px; }
+.p1-card { max-w:420px; margin:24px auto; padding:0 16px; }
 .btn-primary-custom { background:var(--accent); color:white; border:none; width:100%; padding:12px; border-radius:10px; font-family:'Sarabun',sans-serif; font-size:0.92rem; font-weight:600; cursor:pointer; text-align:center; box-shadow:0 4px 12px rgba(108,99,255,0.2); transition:all 0.2s; }
 .btn-primary-custom:hover { opacity:0.9; }
 .btn-secondary-custom { background:var(--surface); border:1px solid var(--border); color:var(--text); width:100%; padding:12px; border-radius:10px; font-family:'Sarabun',sans-serif; font-size:0.9rem; font-weight:500; cursor:pointer; text-align:center; transition:all 0.2s; margin-top:12px; }
@@ -321,10 +321,10 @@ body.is-admin .bulk-panel { display:flex; }
 // ── CONFIG ──
 const ADMIN_PASSWORD = '6/11MM';
 const FIREBASE_CONFIG = {
-  databaseURL: 'https://m609-3c034-default-rtdb.asia-southeast1.firebasedatabase.app'
+      databaseURL: 'https://m611-6a7df-default-rtdb.asia-southeast1.firebasedatabase.app/'
 };
 
-// รายชื่อ ม.6/11
+// รายชื่อ ม.6/11 รันรหัสโค้ดจำลองให้ทำงานในระบบได้
 const MEMBERS = [
   {no:1,code:'61101',name:'นาย ธีรภัทร เชื่อมภิญโญธนชาติ'},
   {no:2,code:'61102',name:'นาย ณฐกร สมชีวา'},
@@ -496,8 +496,7 @@ function deleteCurrentRound() {
     return;
   }
   const rd = curRound();
-  if (confirm(`คุณแน่ใจหรือไม่ว่าต้องการลบรอบ "${rd.name}"?
-⚠️ ข้อมูลการจ่ายเงินทั้งหมดในรอบนี้จะหายไป!`)) {
+  if (confirm(`คุณแน่ใจหรือไม่ว่าต้องการลบรอบ "${rd.name}"?\n⚠️ ข้อมูลการจ่ายเงินทั้งหมดในรอบนี้จะหายไป!`)) {
     state.rounds = state.rounds.filter(r => r.id !== state.currentRound);
     state.currentRound = state.rounds[0].id;
     pushData();
@@ -613,7 +612,7 @@ async function saveBulkUnpaid() {
   checkedBoxes.forEach(cb => {
      const code = cb.value;
      if(rd.payments[code]) {
-        delete rd.payments[code];
+        delete rd.payments[code]; // ลบข้อมูลการจ่ายเงินออกเพื่อให้กลายเป็นยังไม่จ่าย
      }
   });
   
@@ -749,7 +748,7 @@ async function submitSlipP1() {
       savedAt: new Date().toISOString()
     };
 
-    await pushData();
+    await pushData(); 
 
     renderAll();
     
@@ -798,7 +797,7 @@ function viewSlip(code) {
   document.getElementById('slipModal').classList.add('open');
 }
 
-function openOldMoney()){document.getElementById('oldMoneyInp').value=state.oldMoney||0;document.getElementById('oldMoneyModal').classList.add('open');}
+function openOldMoney(){document.getElementById('oldMoneyInp').value=state.oldMoney||0;document.getElementById('oldMoneyModal').classList.add('open');}
 async function saveOldMoney(){state.oldMoney=Number(document.getElementById('oldMoneyInp').value)||0;closeModal('oldMoneyModal');renderStats();await pushData();showToast('อัปเดตเงินเก่าแล้ว ✓');}
 
 async function addExpense() {
@@ -839,8 +838,7 @@ function exportCSV() {
     const p=rd.payments ? rd.payments[m.code] : null;
     csvRows.push([m.no,m.code,m.name,p ? (p.status==='paid'?'จ่ายแล้ว':'ยังไม่จ่าย') :'ยังไม่จ่าย',p?.date||'',p?(p.status==='paid'?50:0):0,p?.slip?'มี':'ไม่มี']);
   });
-  dl(new Blob(['﻿'+csvRows.map(r=>r.map(c=>`"${c}"`).join(',')).join('
-')],{type:'text/csv'}),`เงินห้อง_${rd.name}.csv`);
+  dl(new Blob(['\uFEFF'+csvRows.map(r=>r.map(c=>`"${c}"`).join(',')).join('\n')],{type:'text/csv'}),`เงินห้อง_${rd.name}.csv`);
 }
 
 function exportTxt() {
@@ -855,24 +853,10 @@ function exportTxt() {
   let totalIncome=0;state.rounds.forEach(r=>Object.values(r.payments||{}).forEach(p=>{if(p.status==='paid')totalIncome+=50;}));
   const totalExp=(state.expenses||[]).reduce((s,e)=>s+Number(e.amount||0),0);
   const net=Number(state.oldMoney||0)+totalIncome-totalExp;
-  let txt=`📊 สรุปเงินห้อง ม.6/11 — ${rd.name}
-${'─'.repeat(40)}
-`;
-  txt+=`✅ จ่ายแล้ว (${paid.length} คน):
-`+(paid.length ? paid.map(m=>`  • ${m.name}`).join('
-') : '  - ไม่มี -')+'
-
-';
-  txt+=`❌ ยังไม่จ่าย (${unpaid.length} คน):
-`+(unpaid.length ? unpaid.map(m=>`  • ${m.name}`).join('
-') : '  - ไม่มี -')+'
-
-';
-  txt+=`${'─'.repeat(40)}
-💰 รายรับรวมทุกรอบ: ฿${totalIncome}
-💸 รายจ่ายรวม: ฿${totalExp}
-✨ คงเหลือสุทธิ: ฿${net}
-`;
+  let txt=`📊 สรุปเงินห้อง ม.6/11 — ${rd.name}\n${'─'.repeat(40)}\n`;
+  txt+=`✅ จ่ายแล้ว (${paid.length} คน):\n`+(paid.length ? paid.map(m=>`  • ${m.name}`).join('\n') : '  - ไม่มี -')+'\n\n';
+  txt+=`❌ ยังไม่จ่าย (${unpaid.length} คน):\n`+(unpaid.length ? unpaid.map(m=>`  • ${m.name}`).join('\n') : '  - ไม่มี -')+'\n\n';
+  txt+=`${'─'.repeat(40)}\n💰 รายรับรวมทุกรอบ: ฿${totalIncome}\n💸 รายจ่ายรวม: ฿${totalExp}\n✨ คงเหลือสุทธิ: ฿${net}\n`;
   dl(new Blob([txt],{type:'text/plain'}),`สรุปเงินห้อง_${rd.name}.txt`);
 }
 function dl(blob,name){const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=name;a.click();URL.revokeObjectURL(url);}
